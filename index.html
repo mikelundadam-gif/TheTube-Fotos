@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>TheTube • Foto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #0f0f0f;
+      color: white;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #181818;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header h1 {
+      color: red;
+      margin: 0;
+      font-size: 22px;
+    }
+    header input {
+      margin-left: 30px;
+      flex: 1;
+      padding: 8px;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+    }
+    .container {
+      display: flex;
+    }
+    nav {
+      width: 200px;
+      background-color: #181818;
+      height: calc(100vh - 60px);
+      padding-top: 10px;
+    }
+    nav a {
+      display: block;
+      padding: 12px 20px;
+      color: white;
+      text-decoration: none;
+    }
+    nav a:hover {
+      background-color: #303030;
+    }
+    main {
+      flex: 1;
+      padding: 20px;
+    }
+    .photos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .photo-card {
+      background-color: #202020;
+      border-radius: 10px;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .photo-card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .photo-card p {
+      margin: 8px 0 0;
+      font-size: 14px;
+    }
+    #viewer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0,0,0,0.9);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    #viewer img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+    }
+    #closeBtn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background-color: red;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>TheTube</h1>
+  <input type="text" placeholder="Cerca foto" />
+</header>
+
+<div class="container">
+  <nav>
+    <a href="#">🏠 Home</a>
+    <a href="#">🔥 Trend</a>
+    <a href="#">🖼️ Foto</a>
+  </nav>
+
+  <main>
+    <h2>Foto consigliate</h2>
+    <div class="photos" id="photoList"></div>
+  </main>
+</div>
+
+<div id="viewer">
+  <img id="mainPhoto" />
+  <button id="closeBtn" onclick="closeViewer()">Chiudi</button>
+</div>
+
+<script>
+  const photoList = document.getElementById('photoList');
+  const viewer = document.getElementById('viewer');
+  const mainPhoto = document.getElementById('mainPhoto');
+
+  for (let i = 1; i <= 20; i++) {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+    card.innerHTML = `
+      <img src="foto${i}.jpg" alt="Foto ${i}">
+      <p>Foto ${i}</p>
+    `;
+    card.onclick = () => openViewer(`foto${i}.jpg`);
+    photoList.appendChild(card);
+  }
+
+  function openViewer(src) {
+    mainPhoto.src = src;
+    viewer.style.display = 'flex';
+  }
+
+  function closeViewer() {
+    mainPhoto.src = '';
+    viewer.style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
